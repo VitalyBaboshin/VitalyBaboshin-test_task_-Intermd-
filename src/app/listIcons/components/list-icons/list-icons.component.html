@@ -1,0 +1,30 @@
+<div class="container">
+
+  <div class="interactive-group">
+    <input type="text"
+           placeholder="Search by icon name"
+           class="input-search"
+           (keyup)="onSearchCustomer($event)"
+    />
+
+    <div class="btn-container">
+
+      <button class="btn default" (click)="setFillSvg('#000000')">Default</button>
+      <button class="btn blue" (click)="setFillSvg('#0098DB')">Blue</button>
+      <button class="btn green" (click)="setFillSvg('#96BC33')">Green</button>
+      <button class="btn red" (click)="setFillSvg('#EF4E4E')">Red</button>
+      <button class="btn orange" (click)="setFillSvg('#ED941E')">Orange</button>
+    </div>
+  </div>
+
+
+
+  <div [hidden]="isEmpty">
+    <ng-template #containerForGroup></ng-template>
+  </div>
+
+  <p [hidden]="!isEmpty">Не найдено</p>
+
+</div>
+
+

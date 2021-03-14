@@ -1,0 +1,9 @@
+<div *ngIf="(result | json) != ({} | json)">
+  <p (click)="visible=!visible" class="title" [class.title_close]="!visible">Size {{title}} </p>
+  <div *ngIf="visible" >
+    <div [innerHTML]="html" class="svg-group-container"></div>
+  </div>
+</div>
+
+
+

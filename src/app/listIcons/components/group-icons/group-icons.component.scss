@@ -1,0 +1,57 @@
+
+.title {
+  font-size: 24px;
+  margin: 20px 0 10px 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.title:after {
+  content: url("src/assets/svg/accordion_up.svg");
+  position: absolute;
+  //left: 5px;
+  top: 3px;
+  transform: translateX(10px);
+  width: 24px;
+  height: 24px;
+}
+
+.title_close.title:after {
+  content: url("src/assets/svg/accordion_down.svg");
+}
+
+.svg-group-container {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat( auto-fill, minmax(190px, auto));
+  grid-gap: 20px;
+}
+
+
+:host ::ng-deep .svg-container {
+  display: flex;
+  width: 190px;
+  margin: 0;
+}
+
+:host ::ng-deep svg {
+  width: 32px;
+  height: 32px;
+}
+
+:host ::ng-deep .svg-name{
+  margin: 0;
+  padding-left: 10px;
+  font-size: 15px;
+  text-align: center;
+  align-self: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 600px) {
+  :host ::ng-deep .svg-container {
+    place-self: center;
+  }
+}

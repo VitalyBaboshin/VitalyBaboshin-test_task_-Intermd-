@@ -1,0 +1,62 @@
+
+.container {
+  max-width: 1260px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+.input-search {
+  padding: 5px;
+  margin: 20px 0 0 1px;
+  font-size: 14px;
+}
+.btn-container {
+  margin: 20px 0 0 20px;
+}
+
+.btn {
+  cursor: pointer;
+  padding: 7px 15px;
+  margin: 0 5px;
+  border: none;
+}
+
+.interactive-group {
+  display: flex;
+}
+.btn.default {
+  background-color: gray;
+}
+
+.btn.blue {
+  background-color: #0098DB;
+  color: white;
+
+}
+
+.btn.green {
+  background-color: #96BC33;
+  color: white;
+}
+
+.btn.red {
+  background-color: #EF4E4E;
+  color: white;
+}
+
+.btn.orange {
+  background-color: #ED941E;
+  color: white;
+}
+
+@media (max-width: 700px) {
+  .interactive-group {
+    display: block;
+  }
+  .btn-container {
+    margin-top: 0px;
+  }
+  .btn {
+    margin-top: 10px;
+  }
+}
