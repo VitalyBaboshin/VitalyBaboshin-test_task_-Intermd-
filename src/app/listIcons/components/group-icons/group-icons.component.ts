@@ -1,9 +1,5 @@
-import {
-  AfterContentInit, AfterViewInit, ChangeDetectorRef,
-  Component,
-} from '@angular/core';
+import {AfterContentInit, Component,} from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
-import {filter} from "rxjs/operators";
 
 @Component({
   selector: 'tst-inter-group-icons',
@@ -14,14 +10,12 @@ import {filter} from "rxjs/operators";
 export class GroupIconsComponent implements AfterContentInit {
   public title: string = null;
   public objInner: {}
+  public result = {}
   public html
   public visible = true
-  public result = {}
   public fill: string = '#000000'
-  // private mass = [ {}]
 
   constructor(private domSanitizer: DomSanitizer) {
-    // this.result = this.objInner
   }
 
   ngAfterContentInit(): void {
@@ -29,11 +23,38 @@ export class GroupIconsComponent implements AfterContentInit {
       this.result = this.objInner
   }
 
+  createElement(obj: {}) {
+    //Создаем общий div, innerHtml которого, в конце передадим в DOM
+    const divAllElement = document.createElement('div')
+
+    for (let key in obj) {
+      //Создаем контейнер куда передадим элемент svg и элемент p (имя svg)
+      //key - name, value - svg содержимое,
+      const divElement = document.createElement('div')
+      divElement.classList.add('svg-container')
+      //Добавили внутрь svg
+      divElement.innerHTML = obj[key]
+      divElement.firstElementChild.setAttribute('fill', this.fill)
+
+      const pElement = document.createElement('p')
+      pElement.classList.add('svg-name')
+      pElement.innerText = key
+
+      divElement.appendChild(pElement)
+      divAllElement.appendChild(divElement)
+    }
+
+    //пропуск через санитайзер(удаляет лишний мусор и т.д.)
+    this.html = this.domSanitizer.bypassSecurityTrustHtml(divAllElement.innerHTML)
+  }
+
+  //Установка заливки svg
   setFill(colorFill: string) {
     this.fill = colorFill
     this.createElement(this.result)
   }
 
+  //Фильтруем лишнее
   seacrh(str: string) {
     this.result = {}
 
@@ -42,35 +63,6 @@ export class GroupIconsComponent implements AfterContentInit {
         this.result[key] = this.objInner[key]
       }
     }
-
     this.createElement(this.result)
   }
-
-  createElement(obj: {}) {
-    console.log('this.objInner', obj)
-
-    const divAllElement = document.createElement('div')
-    for (let key in obj) {
-      const divElement = document.createElement('div')
-      divElement.classList.add('svg-container')
-
-      divElement.innerHTML = obj[key]
-      // console.log(divElement.innerHTML)
-      divElement.firstElementChild.setAttribute('fill', this.fill)
-      //
-      const pElement = document.createElement('p')
-      pElement.classList.add('svg-name')
-      pElement.innerText = key
-      //
-      // // console.log(key)
-      // // console.log(this.objInner[key])
-      //
-      divElement.appendChild(pElement)
-      divAllElement.appendChild(divElement)
-    }
-    console.log(divAllElement)
-
-    this.html = this.domSanitizer.bypassSecurityTrustHtml(divAllElement.innerHTML)
-  }
-
 }

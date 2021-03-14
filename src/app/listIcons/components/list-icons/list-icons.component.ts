@@ -1,9 +1,7 @@
 import {
-  AfterContentInit,
   AfterViewInit, ChangeDetectorRef,
   Component,
   ComponentFactoryResolver, ComponentRef,
-  ElementRef, EventEmitter,
   OnInit,
   ViewChild,
   ViewContainerRef
@@ -12,8 +10,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {BASIC_ICONS} from "../../../shared/basic_icons";
 import {SafeHtmlImpl} from "../../service/type/type";
 import {GroupIconsComponent} from "../group-icons/group-icons.component";
-import {log} from "util";
-import {Subject} from "rxjs";
+
 
 
 @Component({
@@ -21,18 +18,18 @@ import {Subject} from "rxjs";
   templateUrl: './list-icons.component.html',
   styleUrls: ['./list-icons.component.scss']
 })
-export class ListIconsComponent implements OnInit, AfterViewInit, AfterContentInit{
+export class ListIconsComponent implements OnInit, AfterViewInit{
   @ViewChild("containerForGroup", { read: ViewContainerRef }) VCRforGroup: ViewContainerRef;
-  @ViewChild('dataContainer') dataContainer: ElementRef;
 
   componentsReferences = Array<ComponentRef<GroupIconsComponent>>()
 
-  searchStr: string
   globObjSvg = [];
+
+  // при формировании общего объекта svg, одновременно создаем массив
+  // только с имена svg(для последующей легкой фильтрации)
   nameForSearch = [];
+  // Пустой результат фильтрации или нет
   isEmpty = false
-
-
 
   constructor(private domSanitizer: DomSanitizer,
               private CFR: ComponentFactoryResolver,
@@ -41,8 +38,16 @@ export class ListIconsComponent implements OnInit, AfterViewInit, AfterContentIn
 
 
   ngOnInit() {
+    this.createObjectSvgForDynamic()
+  }
 
+  ngAfterViewInit() {
+    this.renderWidgetGroupSvg()
+  }
+
+  createObjectSvgForDynamic():void {
     let divTemp = document.createElement('div')
+
     for (let key in BASIC_ICONS) {
       let createSvg
       this.nameForSearch.push(key)
@@ -72,10 +77,10 @@ export class ListIconsComponent implements OnInit, AfterViewInit, AfterContentIn
         viewBox : this.getViewBox(viewBox, width)
       })
 
+      // Временная переменная ширины Svg с помощью который и разобьем на группы
       const paramWidth = createSvg.getAttribute('viewBox').split(' ')[2]
-      // console.log(this.createSvg)
 
-
+      //Формируем глобальны массив с объектами для последуещего создания динамических компонентов
       let tempObj = {}
       let tempObj2 = {}
       tempObj2[key]= createSvg.outerHTML
@@ -85,62 +90,40 @@ export class ListIconsComponent implements OnInit, AfterViewInit, AfterContentIn
       } else {
         let find = false
         for (let i of this.globObjSvg) {
-         if (i.hasOwnProperty(paramWidth)) {
-           i[paramWidth][key]=tempObj2[key]
-           find = true
-         }
+          if (i.hasOwnProperty(paramWidth)) {
+            i[paramWidth][key]=tempObj2[key]
+            find = true
+          }
         }
         if (!find) this.globObjSvg.push(tempObj)
       }
-      // this.globObjSvg[key] = [paramWidth, this.createSvg.outerHTML]
     }
-    console.log(this.nameForSearch)
-    console.log(this.globObjSvg)
-
-
   }
 
-  ngAfterViewInit() {
-    this.renderWidgetInsideWidgetContainer()
-    // console.log('outet HTML', this.createSvg.outerHTML)
-    // this.cd.detectChanges();
+  // Создаем динамические компоненты и передаем в них параметры
+  private renderWidgetGroupSvg() {
 
-
-  }
-
-  ngAfterContentInit() {
-
-    // this.html = this.domSanitizer.bypassSecurityTrustHtml(this.createSvg.outerHTML)
-    // console.log(divTemp2.innerHTML)
-  }
-
-  renderWidgetInsideWidgetContainer() {
     for (let objSize of this.globObjSvg) {
       const sizeSvg = Object.keys(objSize).toString()
-      // const sizeSvg = Object.keys(objSize).toString()
-      console.log(sizeSvg)
       const objInner = objSize[Object.keys(objSize).toString()]
-      // console.log(objSize[Object.keys(objSize).toString()])
-      // console.log(Object.keys(objSize).toString())
-      // console.log(objSize[Object.keys(objSize).toString()])
+
       let componentFactory = this.CFR.resolveComponentFactory(GroupIconsComponent);
       let childComponentRef = this.VCRforGroup.createComponent(componentFactory);
       let childComponent = childComponentRef.instance;
       this.componentsReferences.push(childComponentRef);
 
-
-        childComponent.objInner = objInner
-        childComponent.title = sizeSvg
-
-
-
-      // childComponent.title = key
+      childComponent.objInner = objInner
+      childComponent.title = sizeSvg
     }
+
+    // Принудительно запускает механизм отслеживания изменений;
+    // без нее ошибочки вылетают, хоть без нее и работает
     this.changeDetector.detectChanges();
   }
 
+  // если нету аттрибута viewBox, то возвращаем viewBox сделанный на основе width
+  // иначе возвращаем viewBox
   private getViewBox(viewBox, width): string {
-
     if (viewBox !== null) {
       return viewBox
     } else {
@@ -148,23 +131,19 @@ export class ListIconsComponent implements OnInit, AfterViewInit, AfterContentIn
         return `0 0 ${width} ${width}`
       } else {
         return '0 0 0 0'
-
       }
     }
   }
 
+  // Установка аттрибутов элементу разом
   private setAttributes(el, attrs) {
     for(let key in attrs) {
       el.setAttribute(key, attrs[key]);
     }
   }
 
-
+  // Фильтр
   onSearchCustomer($event: any) {
-    // console.log($event.target.value)
-    // if (this.VCRforGroup.length < 1) return;
-    // console.log(this.VCRforGroup)
-    // this.isEmpty
     const tempNameForSearch = this.nameForSearch.filter(x => x.includes($event.target.value))
     if (tempNameForSearch.length) {
       this.isEmpty = false
@@ -172,22 +151,18 @@ export class ListIconsComponent implements OnInit, AfterViewInit, AfterContentIn
       this.isEmpty = true
     }
 
+    // В каждом, ранее динамически созданом, компоненте запускам функцию фильтраци
+    // передаем в функции строку
     this.componentsReferences.map(x => {
       x.instance.seacrh($event.target.value)
     })
-    // for(let childComponent of this.componentsReferences) {
-    //   let childComponent = this.componentsReferences.instance
-    // }
-    console.log('this.isempty', this.isEmpty)
-    console.log('tempNameForSearch', tempNameForSearch)
-    console.log('this.nameForSearch', this.nameForSearch)
 
   }
 
-
+  // В каждом, ранее динамически созданом, компоненте запускам функцию setFill
+  // для изменения fill в svg
   setFillSvg(colorFill: string) {
     this.componentsReferences.map(x => {
-      // x.instance.fill = colorFill
       x.instance.setFill(colorFill)
     })
   }

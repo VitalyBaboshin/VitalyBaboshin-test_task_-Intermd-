@@ -35,8 +35,8 @@
 }
 
 :host ::ng-deep svg {
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
 }
 
 :host ::ng-deep .svg-name{
@@ -49,9 +49,50 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+@media (max-width: 768px) {
+  .title {
+    font-size: 18px;
+  }
+}
+
 
 @media (max-width: 600px) {
   :host ::ng-deep .svg-container {
     place-self: center;
+  }
+}
+@media (max-width: 500px) {
+  :host ::ng-deep svg {
+    width: 18px;
+    height: 18px;
+  }
+  :host ::ng-deep .svg-name{
+    font-size: 13px;
+  }
+  :host ::ng-deep .svg-container {
+    width: 170px;
+  }
+  .svg-group-container {
+    grid-template-columns: repeat( auto-fill, minmax(170px, auto));
+  }
+}
+
+@media (max-width: 450px) {
+
+  :host ::ng-deep .svg-container {
+    width: 140px;
+  }
+  .svg-group-container {
+    grid-template-columns: repeat( auto-fill, minmax(140px, auto));
+  }
+}
+
+@media (max-width: 360px) {
+
+  :host ::ng-deep .svg-container {
+    width: 120px;
+  }
+  .svg-group-container {
+    grid-template-columns: repeat( auto-fill, minmax(120px, auto));
   }
 }
