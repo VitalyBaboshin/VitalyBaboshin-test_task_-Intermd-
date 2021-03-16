@@ -7,7 +7,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
-import {BASIC_ICONS} from "../../../shared/basic_icons";
+import {BASIC_ICONS} from "src/app/listIcons/shared/basic_icons";
 import {SafeHtmlImpl} from "../../service/type/type";
 import {GroupIconsComponent} from "../group-icons/group-icons.component";
 
@@ -22,7 +22,6 @@ export class ListIconsComponent implements OnInit, AfterViewInit{
   @ViewChild("containerForGroup", { read: ViewContainerRef }) VCRforGroup: ViewContainerRef;
 
   componentsReferences = Array<ComponentRef<GroupIconsComponent>>()
-
   globObjSvg = [];
 
   // при формировании общего объекта svg, одновременно создаем массив
@@ -30,6 +29,10 @@ export class ListIconsComponent implements OnInit, AfterViewInit{
   nameForSearch = [];
   // Пустой результат фильтрации или нет
   isEmpty = false
+
+  //для svg fill
+  customTheme = {'color-main': '#000000'}
+  selectedTheme = this.customTheme
 
   constructor(private domSanitizer: DomSanitizer,
               private CFR: ComponentFactoryResolver,
@@ -156,14 +159,10 @@ export class ListIconsComponent implements OnInit, AfterViewInit{
     this.componentsReferences.map(x => {
       x.instance.seacrh($event.target.value)
     })
-
   }
 
-  // В каждом, ранее динамически созданом, компоненте запускам функцию setFill
-  // для изменения fill в svg
+  //Установка заливки svg
   setFillSvg(colorFill: string) {
-    this.componentsReferences.map(x => {
-      x.instance.setFill(colorFill)
-    })
+    this.selectedTheme = {'color-main': colorFill}
   }
 }
