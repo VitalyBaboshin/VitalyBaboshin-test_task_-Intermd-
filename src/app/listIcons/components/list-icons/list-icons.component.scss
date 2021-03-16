@@ -1,10 +1,10 @@
 :host ::ng-deep .set-fill {
-  fill: var(--color-main);
+  fill: var(--color-fill);
 }
 
 :host {
   $main: black;
-  --color-main: #{$main};
+  --color-fill: #{$main};
 }
 
 .container {

@@ -10,6 +10,6 @@ export class ThemeDirective implements OnChanges {
   }
 
   ngOnChanges() {
-      this.el.nativeElement.style.setProperty(`--${'color-main'}`, this.theme);
+      this.el.nativeElement.style.setProperty(`--${'color-fill'}`, this.theme);
   }
 }
