@@ -11,8 +11,6 @@ import {BASIC_ICONS} from "src/app/listIcons/shared/basic_icons";
 import {SafeHtmlImpl} from "../../service/type/type";
 import {GroupIconsComponent} from "../group-icons/group-icons.component";
 
-
-
 @Component({
   selector: 'tst-inter-list-icons',
   templateUrl: './list-icons.component.html',
@@ -31,8 +29,7 @@ export class ListIconsComponent implements OnInit, AfterViewInit{
   isEmpty = false
 
   //для svg fill
-  customTheme = {'color-main': '#000000'}
-  selectedTheme = this.customTheme
+  selectedThemes = '#000000'
 
   constructor(private domSanitizer: DomSanitizer,
               private CFR: ComponentFactoryResolver,
@@ -104,7 +101,7 @@ export class ListIconsComponent implements OnInit, AfterViewInit{
   }
 
   // Создаем динамические компоненты и передаем в них параметры
-  private renderWidgetGroupSvg() {
+  private renderWidgetGroupSvg():void {
 
     for (let objSize of this.globObjSvg) {
       const sizeSvg = Object.keys(objSize).toString()
@@ -139,14 +136,14 @@ export class ListIconsComponent implements OnInit, AfterViewInit{
   }
 
   // Установка аттрибутов элементу разом
-  private setAttributes(el, attrs) {
+  private setAttributes(el, attrs):void {
     for(let key in attrs) {
       el.setAttribute(key, attrs[key]);
     }
   }
 
   // Фильтр
-  onSearchCustomer($event: any) {
+  onSearchCustomer($event: any): void {
     const tempNameForSearch = this.nameForSearch.filter(x => x.includes($event.target.value))
     if (tempNameForSearch.length) {
       this.isEmpty = false
@@ -162,7 +159,8 @@ export class ListIconsComponent implements OnInit, AfterViewInit{
   }
 
   //Установка заливки svg
-  setFillSvg(colorFill: string) {
-    this.selectedTheme = {'color-main': colorFill}
+  setTheme(color: string) {
+    this.selectedThemes = color;
   }
+
 }

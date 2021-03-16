@@ -13,7 +13,7 @@ export class GroupIconsComponent implements AfterContentInit {
   public result = {}
   public html
   public visible = true
-  
+
   constructor(private domSanitizer: DomSanitizer) {
   }
 

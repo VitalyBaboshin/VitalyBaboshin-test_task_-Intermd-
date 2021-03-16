@@ -5,7 +5,7 @@ import {FormsModule} from "@angular/forms";
 import {IconsService} from "./service/icons.service";
 import {GroupIconsComponent} from "./components/group-icons/group-icons.component";
 import {SpinnerComponent} from "../shared/components/spinner/spinner.component";
-import {ThemeDirective} from "./shared/directives/theme.directive";
+import {ThemeDirective} from "src/app/listIcons/shared/directives/theme.directive";
 
 
 @NgModule({

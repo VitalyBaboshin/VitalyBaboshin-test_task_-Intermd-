@@ -8,16 +8,16 @@
     />
 
     <div class="btn-container">
-      <button class="btn default" (click)="setFillSvg('#000000')">Default</button>
-      <button class="btn blue" (click)="setFillSvg('#0098DB')">Blue</button>
-      <button class="btn green" (click)="setFillSvg('#96BC33')">Green</button>
-      <button class="btn red" (click)="setFillSvg('#EF4E4E')">Red</button>
-      <button class="btn orange" (click)="setFillSvg('#ED941E')">Orange</button>
+      <button class="btn default" (click)="setTheme('#000000')">Default</button>
+      <button class="btn blue" (click)="setTheme('#0098DB')">Blue</button>
+      <button class="btn green" (click)="setTheme('#96BC33')">Green</button>
+      <button class="btn red" (click)="setTheme('#EF4E4E')">Red</button>
+      <button class="btn orange" (click)="setTheme('#ED941E')">Orange</button>
     </div>
   </div>
 
 
-  <div [hidden]="isEmpty" [Theme]="selectedTheme">
+  <div [hidden]="isEmpty" [Theme]="selectedThemes">
     <ng-template #containerForGroup></ng-template>
   </div>
 
