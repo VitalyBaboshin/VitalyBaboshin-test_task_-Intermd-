@@ -1,3 +1,11 @@
+:host ::ng-deep .set-fill {
+  fill: var(--color-main);
+}
+
+:host {
+  $main: black;
+  --color-main: #{$main};
+}
 
 .container {
   max-width: 1260px;
