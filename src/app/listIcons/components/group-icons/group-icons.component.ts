@@ -13,8 +13,7 @@ export class GroupIconsComponent implements AfterContentInit {
   public result = {}
   public html
   public visible = true
-  public fill: string = '#000000'
-
+  
   constructor(private domSanitizer: DomSanitizer) {
   }
 
@@ -34,7 +33,7 @@ export class GroupIconsComponent implements AfterContentInit {
       divElement.classList.add('svg-container')
       //Добавили внутрь svg
       divElement.innerHTML = obj[key]
-      divElement.firstElementChild.setAttribute('fill', this.fill)
+      divElement.firstElementChild.classList.add('set-fill')
 
       const pElement = document.createElement('p')
       pElement.classList.add('svg-name')
@@ -48,11 +47,6 @@ export class GroupIconsComponent implements AfterContentInit {
     this.html = this.domSanitizer.bypassSecurityTrustHtml(divAllElement.innerHTML)
   }
 
-  //Установка заливки svg
-  setFill(colorFill: string) {
-    this.fill = colorFill
-    this.createElement(this.result)
-  }
 
   //Фильтруем лишнее
   seacrh(str: string) {
@@ -65,4 +59,7 @@ export class GroupIconsComponent implements AfterContentInit {
     }
     this.createElement(this.result)
   }
+
+
+
 }
