@@ -22,7 +22,7 @@ export class GroupIconsComponent implements AfterContentInit {
       this.result = this.objInner
   }
 
-  createElement(obj: {}) {
+  private createElement(obj: {}):void {
     //Создаем общий div, innerHtml которого, в конце передадим в DOM
     const divAllElement = document.createElement('div')
 
@@ -49,14 +49,9 @@ export class GroupIconsComponent implements AfterContentInit {
 
 
   //Фильтруем лишнее
-  seacrh(str: string) {
+  seacrh(str: string): void {
     this.result = {}
-
-    for (let key in this.objInner) {
-      if (key.includes(str)) {
-        this.result[key] = this.objInner[key]
-      }
-    }
+    Object.keys(this.objInner).forEach(key => key.includes(str) ? this.result[key]= this.objInner[key] : null)
     this.createElement(this.result)
   }
 

@@ -45,7 +45,7 @@ export class ListIconsComponent implements OnInit, AfterViewInit{
     this.renderWidgetGroupSvg()
   }
 
-  createObjectSvgForDynamic():void {
+  private createObjectSvgForDynamic():void {
     let divTemp = document.createElement('div')
 
     for (let key in BASIC_ICONS) {

@@ -97,4 +97,5 @@ export class SpinnerComponent implements OnInit, OnDestroy, OnChanges, AfterView
         }
         this.context.restore();
     }
+
 }
