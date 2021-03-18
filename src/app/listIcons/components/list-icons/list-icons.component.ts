@@ -21,13 +21,11 @@ export class ListIconsComponent implements OnInit, AfterViewInit{
 
   componentsReferences = Array<ComponentRef<GroupIconsComponent>>();
   globObjSvg = [];
-
   // при формировании общего объекта svg, одновременно создаем массив
   // только с имена svg(для последующей легкой фильтрации)
   nameForSearch = [];
   // Пустой результат фильтрации или нет
   isEmpty = false;
-
   // для svg fill
   selectedThemes = '#000000';
 
@@ -35,7 +33,6 @@ export class ListIconsComponent implements OnInit, AfterViewInit{
               private CFR: ComponentFactoryResolver,
               private changeDetector: ChangeDetectorRef) {
   }
-
 
   ngOnInit() {
     this.createObjectSvgForDynamic();
