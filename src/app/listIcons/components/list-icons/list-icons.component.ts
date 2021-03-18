@@ -86,7 +86,7 @@ export class ListIconsComponent implements OnInit, AfterViewInit{
       } else {
         let find = false;
         for (const i of this.globObjSvg) {
-            if (i.hasOwnProperty(paramWidth)) {
+            if (Object.prototype.hasOwnProperty.call(i, paramWidth)) {
               i[paramWidth][key] = tempObj2[key];
               find = true;
             }
