@@ -10,15 +10,15 @@ import {
   OnInit,
   SimpleChanges,
   ViewEncapsulation,
-} from "@angular/core";
+} from '@angular/core';
 
 @Component({
-    selector: "z-spinner",
-    templateUrl: "./spinner.component.html",
-    styleUrls: ["./spinner.component.scss"]
+    selector: 'z-spinner',
+    templateUrl: './spinner.component.html',
+    styleUrls: ['./spinner.component.scss']
 })
 export class SpinnerComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
-    public hidden: boolean = false;
+    public hidden = false;
 
     private readonly animationTime: number = 1800;
     private readonly fps: number = 40;
@@ -26,17 +26,19 @@ export class SpinnerComponent implements OnInit, OnDestroy, OnChanges, AfterView
     private context: CanvasRenderingContext2D;
     private start: Date;
     private readonly lines: number = 13;
-    private cH: number = 0;
-    private cW: number = 0;
-    private radius: number = 0;
-    private centerX: number = 0;
-    private centerY: number = 0;
+    private cH = 0;
+    private cW = 0;
+    private radius = 0;
+    private centerX = 0;
+    private centerY = 0;
     private interval: number;
     /* tslint:disable:typedef */
     private drawPointer;
-    /* tslint:enable:typedef */
-    @Input("size") public size: number = 48;
-    @Input("valign") public valign: string = "sub";
+
+  // tslint:disable-next-line:no-input-rename
+    @Input('size') public size = 48;
+  // tslint:disable-next-line:no-input-rename
+    @Input('valign') public valign = 'sub';
 
     constructor(private readonly el: ElementRef, private zone: NgZone, private readonly cdRef: ChangeDetectorRef) {
 
@@ -44,7 +46,7 @@ export class SpinnerComponent implements OnInit, OnDestroy, OnChanges, AfterView
 
     public ngOnInit(): void {
         this.canvas = this.el.nativeElement.children[0];
-        this.context = this.canvas.getContext("2d");
+        this.context = this.canvas.getContext('2d');
     }
 
     public ngAfterViewInit(): void {
@@ -91,7 +93,7 @@ export class SpinnerComponent implements OnInit, OnDestroy, OnChanges, AfterView
                 2 * Math.PI,
                 0,
             );
-            this.context.fillStyle = "rgba(153, 153, 153," + (i + 10) / this.lines + ")";
+            this.context.fillStyle = 'rgba(153, 153, 153,' + (i + 10) / this.lines + ')';
             this.context.fill();
             this.context.rotate((Math.PI * 2) / this.lines);
         }

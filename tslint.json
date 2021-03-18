@@ -27,7 +27,8 @@
       true,
       "element",
       "app",
-      "kebab-case"
+      "kebab-case",
+      "tst-inter"
     ],
     "eofline": true,
     "import-blacklist": [
@@ -103,14 +104,14 @@
           "parameter": "nospace",
           "property-declaration": "nospace",
           "variable-declaration": "nospace"
-        },
-        {
-          "call-signature": "onespace",
-          "index-signature": "onespace",
-          "parameter": "onespace",
-          "property-declaration": "onespace",
-          "variable-declaration": "onespace"
         }
+//        {
+//          "call-signature": "onespace",
+//          "index-signature": "onespace",
+//          "parameter": "onespace",
+//          "property-declaration": "onespace",
+//          "variable-declaration": "onespace"
+//        }
       ]
     },
     "variable-name": {

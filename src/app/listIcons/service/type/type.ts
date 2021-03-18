@@ -1,3 +1,3 @@
 export interface SafeHtmlImpl {
-  changingThisBreaksApplicationSecurity: string
+  changingThisBreaksApplicationSecurity: string;
 }
